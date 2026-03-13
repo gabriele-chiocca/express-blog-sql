@@ -36,6 +36,22 @@ app.delete('/posts/:id', (req, res) => {
   });
 });
 
+// API SHOW
+app.get('/posts/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = 'SELECT * FROM posts WHERE id = ?';
+  connection.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({
+        error: 'Errore nella lettura info del post',
+      });
+    }
+
+    res.json(result);
+  });
+});
+
 app.listen(3000, () => {
   console.log('Server avviato sulla porta 3000');
 });
